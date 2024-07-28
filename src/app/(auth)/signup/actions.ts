@@ -8,13 +8,13 @@ import { generateIdFromEntropySize } from "lucia";
 import { isRedirectError } from "next/dist/client/components/redirect";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { signUpSchema, signUpValues } from "@/lib/validations";
+import { SignUpSchema, SignUpValues } from "@/lib/validations";
 
 export async function signUp(
-  credentials: signUpValues,
+  credentials: SignUpValues,
 ): Promise<{ error: string }> {
   try {
-    const { username, email, password } = signUpSchema.parse(credentials);
+    const { username, email, password } = SignUpSchema.parse(credentials);
 
     const passwordHash = await hash(password, {
       memoryCost: 19456,
@@ -27,7 +27,7 @@ export async function signUp(
 
     const existingUsername = await prisma.user.findFirst({
       where: {
-        userName: {
+        username: {
           equals: username,
           mode: "insensitive",
         },
@@ -58,7 +58,7 @@ export async function signUp(
     const createdUser = await prisma.user.create({
         data:{
             id: userId,
-            userName: username,
+            username,
             passwordHash,
             displayName: username,
             email
@@ -67,6 +67,7 @@ export async function signUp(
 
     const session = await lucia.createSession(userId,{} as any);
     const sessionCookie = lucia.createSessionCookie(session.id);
+    console.log(sessionCookie,'ssc')
     cookies().set(
       sessionCookie.name,
       sessionCookie.value,

@@ -25,7 +25,6 @@ import { useTheme } from "next-themes";
 export default function UserButton({className}:{className: string}) {
   const { user } = useSession();
   const {theme , setTheme} = useTheme()
-  console.log('theme hain', theme)
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

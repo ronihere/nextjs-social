@@ -19,7 +19,7 @@ export default function UserAvatar({
       height={size ?? 48}
       width={size ?? 48}
       alt="avatar image"
-      className={cn("aspect-square rounded-full object-cover", className)}
+      className={cn(`aspect-square rounded-full object-cover flex-none`, className)}
     />
   );
 }

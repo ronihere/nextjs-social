@@ -37,9 +37,11 @@ export default function CreatePost() {
     editor?.commands.clearContent();
   }
   return (
-    <div className="flex flex-col gap-5 rounded-2xl bg-card p-5 shadow-sm max-w-[45rem]">
+    <div className="flex flex-col gap-5 rounded-2xl bg-card p-5 shadow-sm">
       <div className="flex gap-5">
-        <UserAvatar avatarUrl={user.avatarUrl || ""} className="hidden sm:inline" />
+        <div className='flex max-h-12'>
+        <UserAvatar avatarUrl={user.avatarUrl || ""} className="hidden sm:inline h-full" />
+        </div>
         <EditorContent
           editor={editor}
           className="max-h-[20rem] w-full overflow-y-auto rounded-2xl bg-background px-5 py-3"

@@ -6,7 +6,6 @@ import { createPostSchema } from "@/lib/validations"
 
 
 export async function CreatePostAction(input:string) {
-    console.log('Hii')
     try {
         const session = await validateRequest();
         if(!session.user)throw Error('unauthorized')
@@ -17,7 +16,6 @@ export async function CreatePostAction(input:string) {
                 userId: session.user.id
             }
         })
-        console.log('done')
         return {
             error: false
         }

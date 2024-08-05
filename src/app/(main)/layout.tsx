@@ -10,14 +10,14 @@ export default async function Layout({
   children: React.ReactNode;
 }>) {
   const session = await validateRequest();
-  console.log("session kya hain", session);
+  // console.log("session kya hain", session);
   if (!session.user) redirect("/login");
   return (
     <SessionProvider value={session}>
       <main className="flex min-h-screen border border-white flex-col relative">
         <Navbar />
-        <div className="mx-auto flex w-full gap-5 min-h-screen px-5 py-2">
-          <Menubar className="m-1 flex-none hidden sm:block sticky top-[4rem] h-fit p-4 shadow-lg rounded-2xl bg-card" />
+        <div className="mx-auto flex w-full max-w-7xl grow gap-5 p-5">
+          <Menubar className="sticky top-[5.25rem] hidden h-fit flex-none space-y-3 rounded-2xl bg-card px-3 py-5 shadow-sm sm:block lg:px-5 xl:w-80" />
           {children}
         </div>
         <Menubar className="mx-auto gap-4 sticky bottom-0 sm:hidden flex justify-center items-center shadow-lg bg-card rounded-lg"/>

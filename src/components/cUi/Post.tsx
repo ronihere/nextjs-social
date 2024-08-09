@@ -24,7 +24,7 @@ export default function Post({ post }: TPostProps) {
             href={`/post/${post.id}`}
             className="block text-sm text-muted-foreground hover:underline"
           >
-            {formatedRelativeTime(post.createdAt)}
+            {/* {formatedRelativeTime(post.createdAt)} */}
           </Link>
         </div>
       </div>

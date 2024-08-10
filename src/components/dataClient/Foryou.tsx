@@ -11,8 +11,6 @@ export default function Foryou() {
   const {
     data,
     status,
-    hasNextPage,
-    error,
     isFetchingNextPage,
     fetchNextPage,
   } = useInfiniteQuery({

@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
     const cursor = req.nextUrl.searchParams.get('cursor') || undefined;
-    const pageSize = 5;
+    const pageSize = 10;
     const posts = await prisma.post.findMany({
       include: postDataInclude,
       orderBy: { createdAt: "desc" },

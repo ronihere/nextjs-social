@@ -1,4 +1,4 @@
-import React, { Children, PropsWithChildren } from 'react'
+import React, {  PropsWithChildren } from 'react'
 import {useInView} from 'react-intersection-observer'
 interface TInfiniteLoaderProps extends PropsWithChildren{
     reachedBottomHandler : ()=> void,

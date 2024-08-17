@@ -17,7 +17,6 @@ export async function GET(req: NextRequest) {
       take: pageSize + 1,
       cursor: cursor ? {id: cursor} : undefined
     });
-    console.log('post', posts);
     const nextCursor = posts.length > pageSize ? posts[pageSize].id : undefined;
 
     const data : PostsPage = {

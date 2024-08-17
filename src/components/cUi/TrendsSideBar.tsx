@@ -6,6 +6,8 @@ import Link from "next/link";
 import React, { Suspense } from "react";
 import UserAvatar from "./userAvatar";
 import { Button } from "../ui/button";
+import FollowButton from "./FollowButton";
+import { TFollowersData } from "@/lib/types";
 
 export default function TrendsSideBar() {
   return (
@@ -19,23 +21,37 @@ export default function TrendsSideBar() {
 }
 
 async function WhoToFollow() {
-  const { user } = await validateRequest();
-  if (!user) return null;
+  const { user: loggedInUser } = await validateRequest();
+  if (!loggedInUser) return null;
 
   const usersToFollow = await prisma.user.findMany({
     where: {
       NOT: {
-        id: user.id,
+        id: loggedInUser.id,
       },
     },
     select: {
       avatarUrl: true,
       displayName: true,
       id: true,
+      followings: {
+        where: {
+          followerId: loggedInUser.id,
+        },
+      },
+      _count: {
+        select: {
+          followings: true,
+        },
+      },
     },
     take: 5,
   });
 
+  const user: TFollowersData = {
+    followers: usersToFollow[0]._count.followings,
+    isFollowedByUser: !!usersToFollow[0].followings.length,
+  };
   return (
     <div className="space-y-5 rounded-xl bg-card p-4 shadow-sm">
       <p className="text-lg font-bold">Who To Follow</p>
@@ -48,7 +64,15 @@ async function WhoToFollow() {
             <p className="font-semibold">{user.displayName}</p>
             <p className="text-sm text-muted-foreground">@{user.displayName}</p>
           </div>
-          <Button className="ms-auto">Follow</Button>
+          {/* <Button className="ms-auto">Follow</Button> */}
+          <FollowButton
+            className="ms-auto"
+            userId={user.id}
+            initialState={{
+              followers: user._count.followings,
+              isFollowedByUser: !!user.followings.length,
+            }}
+          />
         </div>
       ))}
     </div>
@@ -65,7 +89,7 @@ const getTrendingTopics = unstable_cache(
               LIMIT 5
           `;
 
-    console.log(result,'result');
+    console.log(result, "result");
     return result.map((row) => ({
       hashtag: row.hashtag,
       count: Number(row.count),

@@ -10,37 +10,51 @@ datasource db {
 }
 
 model User {
-    id String @id
-    username String @unique
-    displayName String
-    email String? @unique
-    passwordHash String
-    googleId String? @unique
-    avatarUrl String?
-    bio String?
-    sessions Session[]
-    posts Post[]
+  id           String    @id
+  username     String    @unique
+  displayName  String
+  email        String?   @unique
+  passwordHash String
+  googleId     String?   @unique
+  avatarUrl    String?
+  bio          String?
+  sessions     Session[]
+  posts        Post[]
+  followers    Follow[] @relation("followers")
+  followings   Follow[] @relation("followings")
+  createdAt    DateTime  @default(now())
 
-    createdAt DateTime @default(now())
-    @@map("users")
+  @@map("users")
 }
 
-model Session{
-    id String @id
-    userId String
-    expiresAt DateTime
+model Follow {
+  followerId String
+  follower   User   @relation("followings",fields: [followerId], references: [id], onDelete: Cascade)
 
-    user User @relation(fields: [userId], references: [id],onDelete: Cascade)
+  followingId String
+  following User @relation("followers",fields: [followingId], references: [id], onDelete: Cascade)
 
-    @@map("sessions")
+  @@unique([followerId, followingId])
+  @@map("follows")
 }
 
-model Post{
-  id String @id  @default(cuid())
-  userId String 
+model Session {
+  id        String   @id
+  userId    String
+  expiresAt DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model Post {
+  id      String @id @default(cuid())
+  userId  String
   content String
-  user User @relation(fields: [userId], references: [id],onDelete: Cascade)
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-createdAt DateTime @default(now())
+  createdAt DateTime @default(now())
+
   @@map("posts")
 }

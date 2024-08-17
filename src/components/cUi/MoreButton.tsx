@@ -51,12 +51,12 @@ export default function MoreButton({ className, post }: TMoreButtonProps) {
     )
   }
   return (
-    <>
-      <DropdownMenu>
+    <div className={className}>
+      <DropdownMenu >
         <DropdownMenuTrigger>
           <EllipsisIcon className="size-5" />
         </DropdownMenuTrigger>
-        <DropdownMenuContent className={className} align="end">
+        <DropdownMenuContent align="end">
           <DropdownMenuLabel
             className="cursor-pointer p-1"
             onClick={() => setShowDialogue(true)}
@@ -66,7 +66,7 @@ export default function MoreButton({ className, post }: TMoreButtonProps) {
         </DropdownMenuContent>
       </DropdownMenu>
       <DialogueMe isOpen={showDialogue} onClose={closeModalHandler} confirmHandler={deletePostHandler} loading={mutation.isPending}  />
-    </>
+    </div>
   );
 }
 

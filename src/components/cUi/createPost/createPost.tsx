@@ -17,6 +17,7 @@ export default function CreatePost() {
   const {toast} = useToast()
   const mutation = usePostPageMutation();
   const editor = useEditor({
+    immediatelyRender: false,
     extensions: [
       StarterKit.configure({
         bold: false,

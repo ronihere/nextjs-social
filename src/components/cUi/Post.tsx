@@ -3,13 +3,13 @@ import React from "react";
 import UserAvatar from "./userAvatar";
 import Link from "next/link";
 import { formatedRelativeTime } from "@/lib/utils";
-import MoreButton, { DialogueMe } from "./MoreButton";
+import MoreButton from "./MoreButton";
 type TPostProps = {
   post: PostData;
 };
 export default function Post({ post }: TPostProps) {
   return (
-    <article className="space-y-3 rounded-2xl bg-card p-4 shadow-md">
+    <article className="space-y-3 rounded-2xl bg-card p-4 shadow-md ">
       <div className="flex w-full gap-2">
         <Link href={`/users/${post.userId}`}>
           <UserAvatar avatarUrl={post.user.avatarUrl || ""} />
@@ -28,9 +28,9 @@ export default function Post({ post }: TPostProps) {
             {formatedRelativeTime(post.createdAt)}
           </Link>
         </div>
-        <div className="ml-auto">
-        <MoreButton className="" post={post}/>
-        </div>
+        {/* <div className="ml-auto"> */}
+        <MoreButton className="ml-auto" post={post}/>
+        {/* </div> */}
       </div>
       <div className="whitespace-pre-line break-words">{post.content}</div>
     </article>

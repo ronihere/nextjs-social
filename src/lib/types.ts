@@ -18,3 +18,8 @@ export const postDataInclude ={
     nextCursor: string | undefined,
     posts: PostData[]
   }
+
+  export type TFollowersData = {
+    followers: number,
+    isFollowedByUser: boolean
+  }

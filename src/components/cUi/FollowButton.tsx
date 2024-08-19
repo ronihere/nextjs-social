@@ -66,7 +66,7 @@ export default function FollowButton({
       onClick={() => mutate()}
       variant={data.isFollowedByUser ? "destructive" : "default"}
     >
-      {data.isFollowedByUser ? "UnFollow" : "Follow"}
+      {data.isFollowedByUser ? "Unfollow" : "Follow"}
     </Button>
   );
 }

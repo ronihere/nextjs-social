@@ -5,7 +5,6 @@ import { unstable_cache } from "next/cache";
 import Link from "next/link";
 import React, { Suspense } from "react";
 import UserAvatar from "./userAvatar";
-import { Button } from "../ui/button";
 import FollowButton from "./FollowButton";
 import { TFollowersData } from "@/lib/types";
 

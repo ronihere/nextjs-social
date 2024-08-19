@@ -8,19 +8,14 @@ import { kyInstance } from "@/lib/ky";
 import InfiniteLoader from "../cUi/InfiniteLoader";
 import { useSession } from "@/app/(main)/SessionProvider";
 
-export default function Foryou() {
-  const {user} = useSession();
-  const {
-    data,
-    status,
-    isFetchingNextPage,
-    fetchNextPage,
-  } = useInfiniteQuery({
-    queryKey: ["post-feed", "for-you"],
+export default function Following() {
+  const { user } = useSession();
+  const { data, status, isFetchingNextPage, fetchNextPage } = useInfiniteQuery({
+    queryKey: ["post-feed", "following"],
     queryFn: ({ pageParam }) =>
       kyInstance
         .get(
-          "/api/posts/foryou",
+          "/api/posts/following",
           pageParam ? { searchParams: { cursor: pageParam } } : {},
         )
         .json<PostsPage>(),

@@ -16,7 +16,7 @@ export default function page() {
         </p>
         <LoginForm />
         <p className="text-sm font-thin">
-          Don't have an account?{" "}
+          Don&apos;t have an account?{" "}
           <Link
             href={"/signup"}
             className="hover:cursor-pointer hover:underline"

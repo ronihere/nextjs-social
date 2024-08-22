@@ -14,5 +14,5 @@ const LoadingButton = React.forwardRef<HTMLButtonElement, LoadingButtonProps >(
       </Button>
     }
   )
-  Button.displayName = "LoadingButton"
+  LoadingButton.displayName = "LoadingButton"
   export default LoadingButton

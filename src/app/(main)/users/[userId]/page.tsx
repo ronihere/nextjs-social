@@ -59,7 +59,7 @@ export default async function page({ params }: { params: { userId: string } }) {
       <div className="w-full space-y-5">
         <UserDetailsCard userDetails={userDetails} loggedInUser={user} />
         <h2 className="rounded-md bg-card p-4 text-center text-3xl font-bold">
-          {userDetails?.username}'s posts
+          {userDetails?.username}&apos;s posts
         </h2>
         <UserPosts userId={userDetails?.id} />
       </div>

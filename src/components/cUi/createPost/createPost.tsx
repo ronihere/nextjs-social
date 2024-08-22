@@ -16,7 +16,7 @@ export default function CreatePost() {
   const { user } = useSession();
   const {toast} = useToast()
   const mutation = usePostPageMutation();
-  const editor = useEditor({
+  const editor: any = useEditor({
     immediatelyRender: false,
     extensions: [
       StarterKit.configure({

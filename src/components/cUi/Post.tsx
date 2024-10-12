@@ -5,6 +5,7 @@ import Link from "next/link";
 import { formatedRelativeTime } from "@/lib/utils";
 import MoreButton from "./MoreButton";
 import { User } from "lucia";
+import Linkfy from "./linkify";
 type TPostProps = {
   post: PostData;
   loggedInUser: User;
@@ -36,7 +37,9 @@ export default function Post({ post, loggedInUser }: TPostProps) {
         )}
         {/* </div> */}
       </div>
+      <Linkfy>
       <div className="whitespace-pre-line break-words">{post.content}</div>
+      </Linkfy>
     </article>
   );
 }

@@ -11,11 +11,16 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { cache } from "react";
 
-const getUserDetails = cache(async (userId: string) => {
+const getUserDetails = cache(async (name: string) => {
+  console.log('name', name)
+  if(!name){
+    console.log('rmpty bhai')
+  }
   try {
     const userDetails = await prisma.user.findUnique({
       where: {
-        id: userId,
+        // id: userId,
+        username: name
       },
       select: {
         followings: true,
@@ -43,15 +48,15 @@ const getUserDetails = cache(async (userId: string) => {
 export async function generateMetadata({
   params,
 }: {
-  params: { userId: string };
+  params: { name: string };
 }): Promise<Metadata> {
-  const userDetails = await getUserDetails(params.userId);
+  const userDetails = await getUserDetails(params.name);
   return {
     title: `${userDetails?.username}  @${userDetails?.displayName}`,
   };
 }
-export default async function page({ params }: { params: { userId: string } }) {
-  const userDetails = await getUserDetails(params.userId);
+export default async function page({ params }: { params: { name: string } }) {
+  const userDetails = await getUserDetails(params.name);
   const { user } = await validateRequest();
   if (!userDetails || !user) return notFound();
   return (

@@ -14,12 +14,12 @@ export default function Post({ post, loggedInUser }: TPostProps) {
   return (
     <article className="space-y-3 rounded-2xl bg-card p-4 shadow-md">
       <div className="flex w-full gap-2">
-        <Link href={`/users/${post.userId}`}>
+        <Link href={`/users/${post.user.username}`}>
           <UserAvatar avatarUrl={post.user.avatarUrl || ""} />
         </Link>
         <div>
           <Link
-            href={`/users/${post.userId}`}
+            href={`/users/${post.user.username}`}
             className="block font-medium hover:underline"
           >
             {post.user.displayName}

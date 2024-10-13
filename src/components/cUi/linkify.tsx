@@ -35,7 +35,6 @@ const LinkifyhashTag = ({ children }: LinkifyProps) => {
 const LinkifyMention = ({ children }: LinkifyProps) => {
     return (
         <LinkIt regex={/(@[a-zA-Z0-9_-]+)/} component={(match, key) => {
-            console.log('match', match);
             return <Link className="text-primary hover:underline" href={`/users/${match.slice(1)}`} >{match}</Link>
         }}>{children}</LinkIt>
     )

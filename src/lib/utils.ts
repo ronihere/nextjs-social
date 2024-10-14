@@ -1,7 +1,11 @@
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 import {formatDistanceToNowStrict, formatDate} from 'date-fns'
-
+import {
+  generateUploadButton,
+  generateUploadDropzone,
+} from "@uploadthing/react";
+import { OurFileRouter } from "@/app/api/uploadthing/core";
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
@@ -15,6 +19,12 @@ export function formatedRelativeTime(from : Date){
       return formatDate(from, "MMM d")
     }else return formatDate(from, 'MMM d YYYY')
   }
-
-  return ""
 }
+
+
+
+
+export const UploadButton = generateUploadButton<OurFileRouter>();
+export const UploadDropzone = generateUploadDropzone<OurFileRouter>();
+
+

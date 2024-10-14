@@ -7,6 +7,7 @@ export const postDataInclude ={
         displayName: true,
         id: true,
         username: true,
+        bio: true
       },
     },
   } satisfies Prisma.PostInclude

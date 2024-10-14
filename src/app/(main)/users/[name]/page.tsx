@@ -4,18 +4,16 @@ import FollowersCount from "@/components/cUi/FollowersCount";
 import TrendsSideBar from "@/components/cUi/TrendsSideBar";
 import UserAvatar from "@/components/cUi/userAvatar";
 import UserPosts from "@/components/dataClient/UsersPosts";
+import { Button } from "@/components/ui/button";
 import prisma from "@/lib/prisma";
 import { format } from "date-fns";
 import { User } from "lucia";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { cache } from "react";
+import EditProfileDialog from "./components/EditProfileDialog";
 
 const getUserDetails = cache(async (name: string) => {
-  console.log('name', name)
-  if(!name){
-    console.log('rmpty bhai')
-  }
   try {
     const userDetails = await prisma.user.findUnique({
       where: {
@@ -45,6 +43,8 @@ const getUserDetails = cache(async (name: string) => {
   }
 });
 
+export type TuserDetails = Awaited<ReturnType<typeof getUserDetails>>
+
 export async function generateMetadata({
   params,
 }: {
@@ -57,14 +57,14 @@ export async function generateMetadata({
 }
 export default async function page({ params }: { params: { name: string } }) {
   const userDetails = await getUserDetails(params.name);
-  const { user } = await validateRequest();
-  if (!userDetails || !user) return notFound();
+  const { user: loggedInuser } = await validateRequest();
+  if (!userDetails || !loggedInuser) return notFound();
   return (
     <main className="flex w-full min-w-0 gap-5">
       <div className="w-full space-y-5">
-        <UserDetailsCard userDetails={userDetails} loggedInUser={user} />
+        <UserDetailsCard userDetails={userDetails} loggedInUser={loggedInuser} />
         <h2 className="rounded-md bg-card p-4 text-center text-3xl font-bold">
-          {userDetails?.username}&apos;s posts
+          {userDetails?.displayName}&apos;s posts
         </h2>
         <UserPosts userId={userDetails?.id} />
       </div>
@@ -93,7 +93,10 @@ const UserDetailsCard = ({
           <h1 className="text-3xl font-bold">{userDetails?.displayName}</h1>
           <p className="text-muted-foreground">@{userDetails?.username}</p>
         </div>
-        <FollowButton
+        {
+          loggedInUser.id === userDetails?.id ? //in this case , the loggedinUser and the userDetails will be of the same user
+          <EditProfileDialog loggedInUser={userDetails}/>
+           : <FollowButton
           userId={userDetails?.id as string}
           className="ms-auto"
           initialState={{
@@ -103,6 +106,7 @@ const UserDetailsCard = ({
             ),
           }}
         />
+        }  
       </div>
       <div className="text-sm text-muted-foreground">
         <p>

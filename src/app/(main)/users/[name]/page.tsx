@@ -4,14 +4,13 @@ import FollowersCount from "@/components/cUi/FollowersCount";
 import TrendsSideBar from "@/components/cUi/TrendsSideBar";
 import UserAvatar from "@/components/cUi/userAvatar";
 import UserPosts from "@/components/dataClient/UsersPosts";
-import { Button } from "@/components/ui/button";
 import prisma from "@/lib/prisma";
 import { format } from "date-fns";
 import { User } from "lucia";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { cache } from "react";
-import EditProfileDialog from "./components/EditProfileDialog";
+import EditProfileButtons from "./components/EditProfileButtons";
 
 const getUserDetails = cache(async (name: string) => {
   try {
@@ -95,7 +94,7 @@ const UserDetailsCard = ({
         </div>
         {
           loggedInUser.id === userDetails?.id ? //in this case , the loggedinUser and the userDetails will be of the same user
-          <EditProfileDialog loggedInUser={userDetails}/>
+          <EditProfileButtons loggedInUser={userDetails}/>
            : <FollowButton
           userId={userDetails?.id as string}
           className="ms-auto"

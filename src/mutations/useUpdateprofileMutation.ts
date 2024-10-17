@@ -1,6 +1,8 @@
 import updateProfileAction from '@/actions/updateProfileAction';
 import { useToast } from '@/components/ui/use-toast';
 import { PostsPage } from '@/lib/types';
+import { useUploadThing } from '@/lib/uploadThing';
+import { UpdateUserProfileValues } from '@/lib/validations';
 import { InfiniteData, QueryFilters, useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation';
 
@@ -9,9 +11,10 @@ export default function useUpdateprofileMutation() {
     const queryClient = useQueryClient();
     const {toast} = useToast();
     const router = useRouter();
+    const updateAvatarUrl = useUploadThing('imageUploader')
     const mutation = useMutation({
-        mutationFn: updateProfileAction,
-        onSuccess: async (updatedUserDetails) => {
+        mutationFn:async({values, croppedImage}:{values: UpdateUserProfileValues, croppedImage?:File})=>  {return Promise.all([updateProfileAction(values)])},
+        onSuccess: async ([updatedUserDetails]) => {
             const queryFilter: QueryFilters = {
                 queryKey: ['post-feed', 'for-you']
             }

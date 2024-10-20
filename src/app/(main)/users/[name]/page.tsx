@@ -10,7 +10,7 @@ import { User } from "lucia";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { cache } from "react";
-import EditProfileButtons from "./components/EditProfileButtons";
+import EditProfileDialog from "./components/EditProfileDialog";
 
 const getUserDetails = cache(async (name: string) => {
   try {
@@ -94,7 +94,7 @@ const UserDetailsCard = ({
         </div>
         {
           loggedInUser.id === userDetails?.id ? //in this case , the loggedinUser and the userDetails will be of the same user
-          <EditProfileButtons loggedInUser={userDetails}/>
+          <EditProfileDialog loggedInUser={userDetails}/>
            : <FollowButton
           userId={userDetails?.id as string}
           className="ms-auto"
@@ -127,7 +127,7 @@ const UserDetailsCard = ({
       </div>
       {userDetails?.bio && (
         <div className="border-t pt-4 text-muted-foreground">
-          {userDetails?.bio || "Hey I am Roni, Whats'up?"}
+          {userDetails?.bio}
         </div>
       )}
     </article>

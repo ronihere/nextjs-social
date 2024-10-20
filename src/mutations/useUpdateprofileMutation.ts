@@ -16,7 +16,7 @@ export default function useUpdateprofileMutation() {
         mutationFn:async({values, croppedImage}:{values: UpdateUserProfileValues, croppedImage?:File})=>  {return Promise.all([updateProfileAction(values),croppedImage && startUpload([croppedImage]) ])},
         onSuccess: async ([updatedUserDetails,uploadResult]) => {
             const queryFilter: QueryFilters = {
-                queryKey: ['post-feed', 'for-you']
+                queryKey: ['post-feed', 'for-you',"user-page"]
             }
 
             await queryClient.cancelQueries(queryFilter);
@@ -36,7 +36,7 @@ export default function useUpdateprofileMutation() {
                                             ...post,
                                             user: {
                                                 ...updatedUserDetails,
-                                                avatarUrl: uploadResult?.[0]?.url || updatedUserDetails.avatarUrl
+                                                // avatarUrl: uploadResult?.[0]?.url || updatedUserDetails.avatarUrl
                                             }
                                         }
                                     }

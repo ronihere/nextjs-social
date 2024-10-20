@@ -127,7 +127,7 @@ const UserDetailsCard = ({
       </div>
       {userDetails?.bio && (
         <div className="border-t pt-4 text-muted-foreground">
-          {userDetails?.bio || "Hey I am Roni, Whats'up?"}
+          {userDetails?.bio}
         </div>
       )}
     </article>

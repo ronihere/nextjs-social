@@ -135,7 +135,7 @@ const AvatartUrlInput = ({ src, setCroppedImage }: { src: string | StaticImageDa
         </span>
       </button>
       {
-        imageToCrop && <CropImageDialog imageSrc={imageToCrop} setCroppedImage={setCroppedImage} onClose={()=>{setImageToCrop}}/>
+        imageToCrop && <CropImageDialog imageSrc={imageToCrop} setCroppedImage={setCroppedImage} onClose={()=>{setImageToCrop(undefined)}}/>
       }
     </>
   )

@@ -11,10 +11,10 @@ export default function useUpdateprofileMutation() {
     const queryClient = useQueryClient();
     const {toast} = useToast();
     const router = useRouter();
-    const updateAvatarUrl = useUploadThing('imageUploader')
+    const {isUploading, startUpload} = useUploadThing('avatar')
     const mutation = useMutation({
-        mutationFn:async({values, croppedImage}:{values: UpdateUserProfileValues, croppedImage?:File})=>  {return Promise.all([updateProfileAction(values)])},
-        onSuccess: async ([updatedUserDetails]) => {
+        mutationFn:async({values, croppedImage}:{values: UpdateUserProfileValues, croppedImage?:File})=>  {return Promise.all([updateProfileAction(values),croppedImage && startUpload([croppedImage]) ])},
+        onSuccess: async ([updatedUserDetails,uploadResult]) => {
             const queryFilter: QueryFilters = {
                 queryKey: ['post-feed', 'for-you']
             }
@@ -35,7 +35,8 @@ export default function useUpdateprofileMutation() {
                                         return {
                                             ...post,
                                             user: {
-                                                ...updatedUserDetails
+                                                ...updatedUserDetails,
+                                                avatarUrl: uploadResult?.[0]?.url || updatedUserDetails.avatarUrl
                                             }
                                         }
                                     }
